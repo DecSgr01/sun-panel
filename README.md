@@ -27,6 +27,9 @@ A server, NAS navigation panel, Homepage, Browser homepage.
 
 </div>
 
+## 🎯 forkchanges
+
+Add private link function, supporting the addition and management of private links
 
 ![](./doc/images/main-dark.png)
 

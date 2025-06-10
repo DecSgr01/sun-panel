@@ -37,6 +37,7 @@ export interface Icon {
   url: string
   lanUrl: string
   description: string
+  private: number
   openMethod: number
 }
 
