@@ -219,6 +219,8 @@
     "add": "Add item",
     "currentPageLayerOpen": "Open in current page as layer",
     "currentPageOpen": "Open in current page",
+    "private": "Private",
+    "public": "Public",
     "edit": "Edit item",
     "getGroupFail": "Failed to get group information",
     "getIcon": "Get icon",

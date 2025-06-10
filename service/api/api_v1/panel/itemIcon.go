@@ -49,7 +49,7 @@ func (a *ItemIcon) Edit(c *gin.Context) {
 
 	if req.ID != 0 {
 		// 修改
-		updateField := []string{"IconJson", "Icon", "Title", "Url", "LanUrl", "Description", "OpenMethod", "GroupId", "UserId", "ItemIconGroupId"}
+		updateField := []string{"IconJson", "Icon", "Title", "Url", "LanUrl", "Description", "Private", "OpenMethod", "GroupId", "UserId", "ItemIconGroupId"}
 		if req.Sort != 0 {
 			updateField = append(updateField, "Sort")
 		}
@@ -130,15 +130,20 @@ func (a *ItemIcon) GetListByGroupId(c *gin.Context) {
 		apiReturn.ErrorParamFomat(c, err.Error())
 		return
 	}
-
+	cToken := c.GetHeader("token")
 	userInfo, _ := base.GetCurrentUserInfo(c)
 	itemIcons := []models.ItemIcon{}
 
-	if err := global.Db.Order("sort ,created_at").Find(&itemIcons, "item_icon_group_id = ? AND user_id=?", req.ItemIconGroupId, userInfo.ID).Error; err != nil {
+	findString := "item_icon_group_id = ? AND user_id=?"
+
+	if cToken == "" {
+		findString += " AND private=0"
+	}
+
+	if err := global.Db.Order("sort ,created_at").Find(&itemIcons, findString, req.ItemIconGroupId, userInfo.ID).Error; err != nil {
 		apiReturn.ErrorDatabase(c, err.Error())
 		return
 	}
-
 	for k, v := range itemIcons {
 		json.Unmarshal([]byte(v.IconJson), &itemIcons[k].Icon)
 	}

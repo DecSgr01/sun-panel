@@ -66,6 +66,7 @@ async function importIcons(): Promise<string | null> {
               url: iconElement.url,
               lanUrl: iconElement.lanUrl,
               description: iconElement.description,
+              private: iconElement.private,
               openMethod: iconElement.openMethod,
               itemIconGroupId: groupId,
             })
@@ -124,6 +125,7 @@ async function exportIcons(): Promise<IconGroup[]> {
             url: iconElement.url,
             lanUrl: iconElement.lanUrl || '',
             description: iconElement.description || '',
+            private: iconElement.private || 0,
             openMethod: iconElement.openMethod || 1,
           })
         }

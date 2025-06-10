@@ -11,6 +11,7 @@ declare namespace Panel {
         sort?: number
         lanUrl?: string
         description?: string
+        private?: number
         openMethod: number
         itemIconGroupId ?:number
     }

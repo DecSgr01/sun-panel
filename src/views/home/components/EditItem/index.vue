@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, defineEmits, defineProps, ref, watch } from 'vue'
 import type { FormInst, FormRules } from 'naive-ui'
-import { NButton, NForm, NFormItem, NGrid, NGridItem, NInput, NInputGroup, NModal, NSelect, useMessage } from 'naive-ui'
+import { NButton, NForm, NFormItem, NGrid, NGridItem, NInput, NInputGroup, NModal, NSelect, useMessage,NSwitch } from 'naive-ui'
 import IconEditor from './IconEditor.vue'
 import { edit, getSiteFavicon } from '@/api/panel/itemIcon'
 import { getList as getGroupList } from '@/api/panel/itemIconGroup'
@@ -30,6 +30,7 @@ const restoreDefault: Panel.Info = {
   lanUrl: '',
   description: '',
   openMethod: 2,
+  private: 0,
 }
 
 interface Emit {
@@ -59,7 +60,7 @@ const rules: FormRules = {
   // },
 }
 
-const options = [
+const openMethodOptions = [
   {
     default: true,
     label: t('iconItem.currentPageOpen'),
@@ -74,6 +75,16 @@ const options = [
     value: 3,
   },
 ]
+const privateOptions = {
+  public: {
+    label: t('iconItem.public'),
+    value: 0,
+  },
+ private: {
+    label: t('iconItem.private'),
+    value: 1,
+  },
+}
 
 // 更新值父组件传来的值
 const show = computed({
@@ -168,7 +179,7 @@ function getGroupListOptions() {
 
 <template>
   <NModal v-model:show="show" preset="card" size="small" style="width: 600px;border-radius: 1rem;" :title="itemInfo ? t('iconItem.edit') : t('iconItem.add')">
-    <div class="h-[600px] overflow-auto p-[5px]">
+    <div class="h-[700px] overflow-auto p-[5px]">
       <NForm ref="formRef" :model="model" :rules="rules">
         <NGrid cols="2" :x-gap="10" item-responsive>
           <NGridItem span="2 500:1">
@@ -207,7 +218,17 @@ function getGroupListOptions() {
           <NInput v-model:value="model.description" type="text" show-count :maxlength="100" />
         </NFormItem>
         <NFormItem path="openMethod" :label="$t('iconItem.openMethod')">
-          <NSelect v-model:value="model.openMethod" :options="options" />
+          <NSelect v-model:value="model.openMethod" :options="openMethodOptions" />
+        </NFormItem>
+        <NFormItem path="private" :label="$t('iconItem.private')">
+          <NSwitch v-model:value="model.private" :checked-value="privateOptions.private.value" :unchecked-value="privateOptions.public.value">
+              <template #checked>
+                {{privateOptions.private.label}}
+              </template>
+              <template #unchecked>
+                {{privateOptions.public.label}}
+              </template>
+          </NSwitch>
         </NFormItem>
       </NForm>
     </div>
