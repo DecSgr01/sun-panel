@@ -84,7 +84,7 @@ func (a *ItemIconGroup) GetList(c *gin.Context) {
 		apiReturn.ErrorDatabase(c, err.Error())
 		return
 	} else {
-		apiReturn.SuccessListData(c, groups, 0)
+		apiReturn.SuccessListData(c, groups, int64(len(groups)))
 	}
 }
 
