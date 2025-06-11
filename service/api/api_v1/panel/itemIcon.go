@@ -148,7 +148,7 @@ func (a *ItemIcon) GetListByGroupId(c *gin.Context) {
 		json.Unmarshal([]byte(v.IconJson), &itemIcons[k].Icon)
 	}
 
-	apiReturn.SuccessListData(c, itemIcons, 0)
+	apiReturn.SuccessListData(c, itemIcons, int64(len(itemIcons)))
 }
 
 func (a *ItemIcon) Deletes(c *gin.Context) {
