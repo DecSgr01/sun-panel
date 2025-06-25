@@ -130,13 +130,13 @@ func (a *ItemIcon) GetListByGroupId(c *gin.Context) {
 		apiReturn.ErrorParamFomat(c, err.Error())
 		return
 	}
-	cToken := c.GetHeader("token")
 	userInfo, _ := base.GetCurrentUserInfo(c)
 	itemIcons := []models.ItemIcon{}
 
 	findString := "item_icon_group_id = ? AND user_id=?"
 
-	if cToken == "" {
+	mode, exists := c.Get(base.GIN_GET_VISIT_MODE)
+	if exists && mode == base.VISIT_MODE_PUBLIC {
 		findString += " AND private=0"
 	}
 
